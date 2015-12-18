@@ -19,15 +19,8 @@ sed -e "s|^ *\"rawPreferencesSourceUrl\": .*$|\"rawPreferencesSourceUrl\": \"htt
 # Test preferences stored in the GPII Universal repository need to be modified
 # before they can be uploaded to CouchDB
 if [ -n "$PRIME_DB" ]; then
-    mkdir /tmp/modified_preferences
-    /usr/local/bin/modify_preferences.sh /opt/universal/testData/preferences /tmp/modified_preferences
-    curl -X PUT http://${COUCHDB_HOST_ADDRESS}:5984/user
-    npm -g install kanso
-    for preference in /tmp/modified_preferences/*.json; do
-        kanso upload $preference http://${COUCHDB_HOST_ADDRESS}:5984/user;
-    done
-    rm -rf /tmp/modified_preferences
-    npm -g uninstall kanso
+    # prime the database
+    /usr/local/bin/prime_db.sh
 fi
 
 cat >/etc/supervisord.d/preferences_server.ini<<EOF
