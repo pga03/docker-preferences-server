@@ -1,6 +1,6 @@
 #!/bin/sh -e
 
-if [ -z "$NODE_ENV" ] || [ -z "$COUCHDB_HOST_ADDRESS" ]; then
+if [ -z "$NODE_ENV" ] || [ -z "$CLOUDANT_HOST_ADDRESS" ]; then
     echo >&2 'Error: Both COUCHDB_HOST_ADDRESS and NODE_ENV environment variables need to be set'
     exit 1
 fi
@@ -8,7 +8,7 @@ fi
 # Modify the following line in the Preferences Server's config to point to a
 # real CouchDB instance:
 # https://github.com/GPII/universal/blob/ec89640347d0977f3d4642cdd5b91b65896c482f/gpii/node_modules/rawPreferencesServer/configs/production.json#L14
-sed -e "s|^ *\"rawPreferencesSourceUrl\": .*$|\"rawPreferencesSourceUrl\": \"http://${COUCHDB_HOST_ADDRESS}:5984/user/%userToken\"|" -i /opt/universal/gpii/node_modules/rawPreferencesServer/configs/production.json
+sed -e "s|^ *\"rawPreferencesSourceUrl\": .*$|\"rawPreferencesSourceUrl\": \"${CLOUDANT_HOST_ADDRESS}/user/%userToken\"|" -i /opt/universal/gpii/node_modules/rawPreferencesServer/configs/production.json
 
 # Bluemix networking has a delay when the container starts. The recommended
 # work around is to wait for approx. 30 seconds. We're going to wait till curl
