@@ -32,12 +32,12 @@ The following environment variables can be used to affect the container's behavi
 
 #### Bluemix tools
 
-You will need the Cloud Foundry CLI client and Containers plugin.
+You will need the [Cloud Foundry CLI](https://github.com/cloudfoundry/cli/releases) client and [IBM Containers CLI plugin](https://www.ng.bluemix.net/docs/containers/container_cli_ov.html).
 
 The preferences server can run on Bluemix using a Cloudant database service. 
 
-1. Create a dummy PaaS application
-2. Create a Cloudant service from the Bluemix catalog
+1. Create a dummy application on Bluemix
+2. Create a [Cloudant service](https://console.ng.bluemix.net/catalog/services/cloudant-nosql-db/) from the [Bluemix catalog](https://console.ng.bluemix.net/catalog/)
 3. Bind the Cloudant service to the dummy PaaS application
 4. The dummy application will have a Cloudant URL in its service credentials. Specify this value for `CLOUDANT_HOST_ADDRESS.` The url has a format of https://user:pass@host.cloudant.com.
 
