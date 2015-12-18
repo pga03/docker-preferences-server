@@ -10,6 +10,12 @@ fi
 # https://github.com/GPII/universal/blob/ec89640347d0977f3d4642cdd5b91b65896c482f/gpii/node_modules/rawPreferencesServer/configs/production.json#L14
 sed -e "s|^ *\"rawPreferencesSourceUrl\": .*$|\"rawPreferencesSourceUrl\": \"http://${COUCHDB_HOST_ADDRESS}:5984/user/%userToken\"|" -i /opt/universal/gpii/node_modules/rawPreferencesServer/configs/production.json
 
+# Bluemix networking has a delay when the container starts. The recommended
+# work around is to wait for approx. 30 seconds. We're going to wait till curl
+# says the database is reachable.
+# Reference: https://developer.ibm.com/answers/questions/183427/calling-out-to-the-internet-from-a-docker-containe/?smartspace=bluemix
+/usr/local/bin/wait_for_networking.sh
+
 # Test preferences stored in the GPII Universal repository need to be modified
 # before they can be uploaded to CouchDB
 if [ -n "$PRIME_DB" ]; then
